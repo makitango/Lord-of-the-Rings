@@ -7,13 +7,18 @@ import { useRouter } from "next/router";
 export default function VolumeX() {
   const router = useRouter();
   const { slug } = router.query;
-  const currentVolume = volumes.find((volume) => volume.slug === slug);
+  const volumeIndex = volumes.findIndex((volume) => volume.slug === slug);
+  const volume = volumes[volumeIndex];
+  const previousVolume = volumes[volumeIndex - 1];
+  const nextVolume = volumes[volumeIndex + 1];
 
-  if (!currentVolume) {
+  console.log(nextVolume);
+
+  if (!volume) {
     return null;
   }
 
-  const { title, description, cover, books, color } = currentVolume;
+  const { title, description, cover, books } = volume;
 
   return (
     <>
@@ -39,7 +44,21 @@ export default function VolumeX() {
           {books[1].ordinal}: {books[1].title}
         </li>
       </ul>
-      <Link href="../volumes/the-two-towers">Next book</Link>
+      {previousVolume ? (
+        <button>
+          <Link href={`/volumes/${previousVolume.slug}`}>
+            Previous book: {previousVolume.title}
+          </Link>
+        </button>
+      ) : null}
+      <br />
+      {nextVolume ? (
+        <button>
+          <Link href={`/volumes/${nextVolume.slug}`}>
+            Next book: {nextVolume.title}
+          </Link>
+        </button>
+      ) : null}
     </>
   );
 }
