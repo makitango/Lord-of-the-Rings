@@ -1,7 +1,10 @@
-export default function HomePage() {
+import Link from "next/link";
+
+export default function Level1() {
   return (
     <div>
-      <h1>Hello from Next.js</h1>
+      <h1>Level1</h1>
+      <Link href="/volumes">Go to books overview</Link>
     </div>
   );
 }
